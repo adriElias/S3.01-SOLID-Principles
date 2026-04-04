@@ -1,18 +1,18 @@
-# 🧱 S - Principi de Responsabilitat Única (SRP)
+# 🧱 S - Single Responsibility Principle (SRP)
 
-## 🧠 Què és?
+## 🧠 What is it?
 
-El **Principi de Responsabilitat Única** estableix que:
+The **Single Responsibility Principle** states that:
 
-> **Una classe ha de tenir una única raó per canviar.**
+> **A class should have only one reason to change.**
 
-Dit d’una altra manera, una classe hauria de tenir **una sola responsabilitat**, o **un sol motiu per ser modificada**.
+In other words, a class should have **only one responsibility**, or **only one reason to be modified**.
 
-👩‍🏫 **Exemple:**
-Si tens una classe `Informe` que:
-- genera contingut,
-- imprimeix l’informe,
-- i el desa l'informe.
+👩‍🏫 **Example:**
+If you have a `Report` class that:
+- generates content,
+- prints the report,
+- and saves the report.
 
 ```java
 public class Informe {
@@ -47,100 +47,168 @@ public class Informe {
 
 ✅ Versió refactoritzada amb SRP aplicat: separem les responsabilitats en classes diferents:
 
-- **1️⃣ Informe: només conté el contingut.**
+- **1️⃣ Report: contains only the content.**
 
 ```java
-// Classe amb una única responsabilitat: mantenir el contingut
-public class Informe {
-    private String contingut;
+// Class with a single responsibility: maintain the content
+public class Report {
+    private String content;
 
-    public Informe(String contingut) {
-        this.contingut = contingut;
+    public Report(String content) {
+        this.content = content;
     }
 
-    public String obtenirContingut() {
-        return contingut;
-    }
-}
-```
-
-- **2️⃣ Impressora: s'encarrega d'imprimir.**
-
-```java
-// Classe amb una única responsabilitat: imprimir informes
-public class Impressora {
-    public void imprimirInforme(Informe informe) {
-        System.out.println("Imprimint informe:");
-        System.out.println(informe.obtenirContingut());
+    public String getContent() {
+        return content;
     }
 }
 ```
-- **3️⃣ Desament: s'encarrega de desar l'informe.**
+
+- **2️⃣ Printer: responsible for printing.**
 
 ```java
-// Classe amb una única responsabilitat: desar informes
-public class Desament {
-    public void desarInforme(Informe informe, String nomFitxer) {
-        try (FileWriter writer = new FileWriter(nomFitxer)) {
-            writer.write(informe.obtenirContingut());
-            System.out.println("Informe desat a " + nomFitxer);
+// Class with a single responsibility: print reports
+public class Printer {
+    public void printReport(Report report) {
+        System.out.println("Printing report:");
+        System.out.println(report.getContent());
+    }
+}
+```
+- **3️⃣ Storage: responsible for saving the report.**
+
+```java
+// Class with a single responsibility: save reports
+public class Storage {
+    public void saveReport(Report report, String fileName) {
+        try (FileWriter writer = new FileWriter(fileName)) {
+            writer.write(report.getContent());
+            System.out.println("Report saved to " + fileName);
         } catch (IOException e) {
-            System.err.println("Error en desar l'informe: " + e.getMessage());
+            System.err.println("Error saving report: " + e.getMessage());
         }
     }
 }
 ```
-- **4️⃣ Exemple d'ús:**
+- **4️⃣ Usage example:**
 
 ```java
 public class Main {
     public static void main(String[] args) {
-        Informe informe = new Informe("Aquest és el contingut de l'informe.");
+        Report report = new Report("This is the content of the report.");
 
-        ImpressoraInforme impressora = new ImpressoraInforme();
-        impressora.imprimirInforme(informe);
+        Printer printer = new Printer();
+        printer.printReport(report);
 
-        Desament desament = new Desament();
-        desament.desarInforme(informe, "informe.txt");
+        Storage storage = new Storage();
+        storage.saveReport(report, "report.txt");
     }
 }
 ```
 ---
 
-## 🎯 Objectiu de l’exercici
+## 🎯 Exercise Objective
 
-A l’arxiu Java adjunt trobaràs una classe que **no respecta aquest principi**: fa massa coses alhora.
+In the attached Java file, you will find a class that **does not respect this principle**: it does too many things at once.
 
-🔧 El teu repte és:
+🔧 Your challenge is:
 
-1. Analitzar les responsabilitats múltiples que té la classe.
-2. Separar-les en **classes diferents**, cadascuna amb una sola responsabilitat clara.
-3. Mantenir el codi llegible, modular i fàcil de mantenir.
-
----
-
-## 📌 Consells per aplicar SRP
-
-✅ Pregunta’t: *"Quines raons tindria aquesta classe per canviar?" i "Quines són les responsabilitats d’aquesta classe?"*
-
-✅ Si n’hi ha més d’una... és hora de separar responsabilitats!
-
-✅ No tinguis por de crear **més classes petites i enfocades**.
+1. Analyze the multiple responsibilities that the class has.
+2. Separate them into **different classes**, each with a single clear responsibility.
+3. Keep the code readable, modular, and easy to maintain.
 
 ---
 
+## 📌 Tips for applying SRP
 
-## 💬 Reflexió
+✅ Ask yourself: *"What reasons would this class have to change?" and "What are the responsibilities of this class?"*
 
-Quan una classe té només una responsabilitat:
-- És més fàcil de llegir.
-- És més fàcil de provar.
-- És menys probable que generi errors quan canvies una funcionalitat.
+✅ If there's more than one... it's time to separate responsibilities!
 
-🔁 **Menys acoblament, més cohesió.**
+✅ Don't be afraid to create **more small and focused classes**.
 
 ---
 
-🚀 Endavant! Revisa el codi, aplica el principi SRP i gaudeix del procés de refactorització.
 
-❓ **Quantes responsabilitats té la classe?**
+## 💬 Reflection
+
+When a class has only one responsibility:
+- It's easier to read.
+- It's easier to test.
+- It's less likely to generate errors when you change functionality.
+
+🔁 **Less coupling, more cohesion.**
+
+---
+
+🚀 Let's go! Review the code, apply the SRP principle, and enjoy the refactoring process.
+
+❓ **How many responsibilities does the class have?**
+
+---
+
+## ✅ Solution - Folder Structure
+
+Here's the recommended folder structure after applying the SRP principle:
+
+```
+SolidPrinciples/
+├── pom.xml                                    # Maven configuration file
+├── README.md                                  # Project documentation
+│
+├── src/
+│   ├── main/
+│   │   └── java/
+│   │       ├── D/                            # Dependency Inversion Principle examples
+│   │       ├── I/                            # Interface Segregation Principle examples
+│   │       ├── L/                            # Liskov Substitution Principle examples
+│   │       ├── O/                            # Open/Closed Principle examples
+│   │       │   ├── README.md
+│   │       │   ├── _new/                     # Refactored solution
+│   │       │   └── _old/                     # Original violation
+│   │       │
+│   │       └── S/                            # Single Responsibility Principle examples
+│   │           ├── README.md                 # This file with documentation
+│   │           ├── _new/                     # Refactored solution applying SRP
+│   │           │   ├── User.java             # Single responsibility: User data
+│   │           │   ├── UserValidator.java    # Single responsibility: Email and password validation
+│   │           │   ├── UserRegistrationService.java # Single responsibility: User registration logic
+│   │           │   ├── EmailService.java     # Single responsibility: Email operations
+│   │           │   └── Main.java             # Main class to test the solution
+│   │           │
+│   │           └── _old/                     # Original violation of SRP (for reference)
+│   │               └── User_old.java         # Example of violating SRP
+│   │
+│   └── test/
+│       └── java/
+│           ├── D/                            # Tests for Dependency Inversion
+│           ├── I/                            # Tests for Interface Segregation
+│           ├── L/                            # Tests for Liskov Substitution
+│           ├── O/                            # Tests for Open/Closed
+│           │
+│           └── S/                            # Tests for Single Responsibility
+│               └── UserTest.java             # Unit tests for User and related classes
+│
+└── target/                                    # Maven build output (generated)
+    ├── classes/                              # Compiled main classes
+    └── test-classes/                         # Compiled test classes
+```
+
+### Description of each class
+
+| Class | Responsibility |
+| --- | --- |
+| **User** | Stores user information (name, email, password) |
+| **UserValidator** | Validates email format and password strength |
+| **UserRegistrationService** | Orchestrates the user registration process |
+| **EmailService** | Handles sending emails to users |
+| **Main** | Entry point and usage demonstration |
+
+### Key Benefits
+
+✅ **User** - Only manages user data
+✅ **UserValidator** - Only validates user information  
+✅ **UserRegistrationService** - Only handles registration workflow
+✅ **EmailService** - Only manages email communication
+
+Each class has **one reason to change** and **one responsibility** ✨

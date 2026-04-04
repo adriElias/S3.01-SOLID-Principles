@@ -3,6 +3,7 @@ package S;
 import org.junit.Test;
 import org.junit.Before;
 import static org.junit.Assert.*;
+import S._new.User;
 
 public class UserTest {
     
