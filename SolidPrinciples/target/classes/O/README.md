@@ -1,128 +1,196 @@
-# 🚪 O - Principi Obert/Tancat (OCP)
+# 🚪 O - Open/Closed Principle (OCP)
 
-## 🧠 Què és?
+## 🧠 What is it?
 
-El **Principi Obert/Tancat** estableix que:
+The **Open/Closed Principle** states that:
 
-> **El codi ha d’estar obert a l’extensió, però tancat a la modificació**
+> **Code should be open for extension, but closed for modification**
 
-Això vol dir que hauríem de poder **afegir noves funcionalitats** al nostre sistema **sense haver de modificar el codi existent**.
+This means we should be able to **add new functionalities** to our system **without modifying existing code**.
 
 
-### 👩‍🏫 **Exemple:**
+### 👩‍🏫 **Example:**
 
-Suposa que tens una classe `CalculadoraDescomptes` amb aquest mètode:
+Suppose you have a `DiscountCalculator` class with this method:
 
 ```java
-public double calculaDescompte(Producte producte) {
-    if (producte.getTipus().equals("Nadal")) {
-        return producte.getPreu() * 0.2;
-    } else if (producte.getTipus().equals("BlackFriday")) {
-        return producte.getPreu() * 0.3;
+public double calculateDiscount(Product product) {
+    if (product.getType().equals("Christmas")) {
+        return product.getPrice() * 0.2;
+    } else if (product.getType().equals("BlackFriday")) {
+        return product.getPrice() * 0.3;
     }
     return 0;
 }
 ```
-🔴 Problema: Cada vegada que vols afegir un nou tipus de descompte, **has de modificar aquesta classe**.
-⚠️ Això **viola el principi OCP**, perquè el codi no està tancat a la modificació.
+🔴 Problem: Every time you want to add a new discount type, **you have to modify this class**.
+⚠️ This **violates the OCP**, because the code is not closed to modification.
 
 
-✅ La solució és usar **polimorfisme** o **patrons de disseny** (com a **Estratègia** o **Fàbrica**), que permetin afegir nous comportaments sense tocar el codi existent:
+✅ The solution is to use **polymorphism** or **design patterns** (such as **Strategy** or **Factory**), which allow adding new behaviors without touching existing code:
 
-- **1️⃣ Definim una interfície comuna:**
+- **1️⃣ Define a common interface:**
 
 ```java
-public interface EstrategiaDescompte {
-    double aplicaDescompte(Producte producte);
+public interface DiscountStrategy {
+    double applyDiscount(Product product);
 }
 ```
-- **2️⃣ Implementem estratègies concretes:**
+- **2️⃣ Implement concrete strategies:**
 
 ```java
-public class DescompteNadal implements EstrategiaDescompte {
-    public double aplicaDescompte(Producte producte) {
-        return producte.getPreu() * 0.2;
+public class ChristmasDiscount implements DiscountStrategy {
+    public double applyDiscount(Product product) {
+        return product.getPrice() * 0.2;
     }
 }
 
-public class DescompteBlackFriday implements EstrategiaDescompte {
-    public double aplicaDescompte(Producte producte) {
-        return producte.getPreu() * 0.3;
+public class BlackFridayDiscount implements DiscountStrategy {
+    public double applyDiscount(Product product) {
+        return product.getPrice() * 0.3;
     }
 }
 
-public class DescompteAniversari implements EstrategiaDescompte {
-    public double aplicaDescompte(Producte producte) {
-        return producte.getPreu() * 0.1;
+public class AnniversaryDiscount implements DiscountStrategy {
+    public double applyDiscount(Product product) {
+        return product.getPrice() * 0.1;
     }
 }
 
 ```
-- **3️⃣ Classe CalculadoraDescomptes flexible i oberta a l’extensió:**
+- **3️⃣ Flexible DiscountCalculator open for extension:**
 
 ```java
 
-public class CalculadoraDescomptes {
+public class DiscountCalculator {
 
-    public double calculaDescompte(Producte producte, EstrategiaDescompte estrategia) {
-        return estrategia.aplicaDescompte(producte);
+    public double calculateDiscount(Product product, DiscountStrategy strategy) {
+        return strategy.applyDiscount(product);
     }
 }
 ````
-- **4️⃣ Exemple d'ús:**
+- **4️⃣ Usage example:**
 
 ```java
 public class Main {
     public static void main(String[] args) {
-        Producte producte = new Producte("Portàtil", 1000);
+        Product product = new Product("Laptop", 1000);
 
-        CalculadoraDescomptes calculadora = new CalculadoraDescomptes();
+        DiscountCalculator calculator = new DiscountCalculator();
  
-        double descompte = calculadora.calculaDescompte(producte, new DescompteNadal());
-        System.out.println("Descompte aplicat: " + descompte);
+        double discount = calculator.calculateDiscount(product, new ChristmasDiscount());
+        System.out.println("Discount applied: " + discount);
     }
 }
 ```
 ---
 
-## 🎯 Objectiu de l’exercici
+## 🎯 Exercise Objective
 
-En l’arxiu Java adjunt trobaràs una classe que **no respecta el principi OCP**: necessita ser modificada cada cop que hi ha un canvi o extensió de funcionalitat.
+In the attached Java file you will find a class that **does not respect the OCP principle**: it needs to be modified every time there is a change or extension of functionality.
 
-🔧 El teu repte és:
+🔧 Your challenge is:
 
-1. Identificar quina part del codi està **massa exposada a modificacions**.
-2. Refactoritzar-lo perquè sigui **fàcilment extensible** sense alterar el comportament existent.
-3. Aplicar **abstraccions i polimorfisme** per fer el codi més flexible i robust.
-
----
-
-## 📌 Consells per aplicar OCP
-
-✅ **Evita instruccions condicionals (if/else, switch)** per decidir comportaments que poden variar amb el temps.
-
-✅ **Defineix interfícies o classes abstractes** que permetin afegir noves funcionalitats sense tocar el codi existent.
-
-✅ **Fes servir patrons com a Estratègia, Fàbrica o Cadena de Responsabilitat** segons el context.
+1. Identify which part of the code is **too exposed to modifications**.
+2. Refactor it to be **easily extensible** without altering existing behavior.
+3. Apply **abstractions and polymorphism** to make the code more flexible and robust.
 
 ---
 
+## 📌 Tips for applying OCP
 
-## 💬 Reflexió
+✅ **Avoid conditional statements (if/else, switch)** to decide behaviors that may vary over time.
 
-Quan un sistema està ben dissenyat segons **OCP**:
-- Pots afegir **noves funcionalitats** amb facilitat.
-- El teu codi és **més estable** i menys vulnerable a regressions`*`.
-- Millores la **reutilització** i **mantenibilitat**.
+✅ **Define interfaces or abstract classes** that allow adding new functionalities without touching existing code.
 
-🔁 **Extensible**, però **segur**. Aquest és el poder de l’OCP. 
-
-`*` **Regressió** significa que una funcionalitat que **abans funcionava correctament, ara ha deixat de funcionar** després d’haver fet canvis al codi.
+✅ **Use patterns like Strategy, Factory, or Chain of Responsibility** depending on the context.
 
 ---
 
-🚀 Endavant! Revisa el codi, detecta com es pot millorar i aplica el principi OCP per fer-lo més modular i preparat pel futur.
 
-❓ **Ets capaç d’afegir un nou producte sense canviar el codi?** 
+## 💬 Reflection
 
+When a system is well designed according to **OCP**:
+- You can add **new functionalities** easily.
+- Your code is **more stable** and less vulnerable to regressions*.
+- You improve **reusability** and **maintainability**.
 
+🔁 **Extensible**, yet **safe**. This is the power of OCP.
+
+`*` **Regression** means that functionality that **previously worked correctly now stops working** after making changes to the code.
+
+---
+
+🚀 Let's go! Review the code, identify how it can be improved, and apply the OCP principle to make it more modular and future-proof.
+
+❓ **Can you add a new instrument without changing the code?**
+---
+
+## ✅ Solution - Folder Structure
+
+Here's the recommended folder structure after applying the OCP principle:
+
+```
+SolidPrinciples/
+├── pom.xml                                    # Maven configuration file
+├── README.md                                  # Project documentation
+│
+├── src/
+│   ├── main/
+│   │   └── java/
+│   │       ├── D/                            # Dependency Inversion Principle examples
+│   │       ├── I/                            # Interface Segregation Principle examples
+│   │       ├── L/                            # Liskov Substitution Principle examples
+│   │       ├── O/                            # Open/Closed Principle examples
+│   │       │   ├── README.md                 # This file with documentation
+│   │       │   ├── _new/                     # Refactored solution
+│   │       │   │   ├── Instrument.java       # Abstract class: base for all instruments
+│   │       │   │   ├── Drums.java            # Implementation: Drums instrument
+│   │       │   │   ├── Guitar.java           # Implementation: Guitar instrument
+│   │       │   │   ├── Piano.java            # Implementation: Piano instrument
+│   │       │   │   ├── InstrumentPlayer.java # Orchestrates instrument playing (open for extension)
+│   │       │   │   └── Main.java             # Main class to test the solution
+│   │       │   │
+│   │       │   └── _old/                     # Original violation of OCP (for reference)
+│   │       │       └── InstrumentPlayer.java # Example with if/else conditions
+│   │       │
+│   │       └── S/                            # Single Responsibility Principle examples
+│   │           ├── README.md
+│   │           ├── _new/                     # Refactored solution
+│   │           └── _old/                     # Original violation
+│   │
+│   └── test/
+│       └── java/
+│           ├── D/                            # Tests for Dependency Inversion
+│           ├── I/                            # Tests for Interface Segregation
+│           ├── L/                            # Tests for Liskov Substitution
+│           ├── O/                            # Tests for Open/Closed
+│           │   └── InstrumentPlayerTest.java # Unit tests for instruments
+│           │
+│           └── S/                            # Tests for Single Responsibility
+│               └── UserTest.java             # Unit tests for User and related classes
+│
+└── target/                                    # Maven build output (generated)
+    ├── classes/                              # Compiled main classes
+    └── test-classes/                         # Compiled test classes
+```
+
+### Description of each class
+
+| Class | Responsibility |
+| --- | --- |
+| **Instrument** | Abstract base class defining the contract for all instruments |
+| **Drums** | Implementation of Drums instrument |
+| **Guitar** | Implementation of Guitar instrument |
+| **Piano** | Implementation of Piano instrument |
+| **InstrumentPlayer** | Orchestrates instrument playing without knowing specific types |
+| **Main** | Entry point and usage demonstration |
+
+### Key Benefits
+
+✅ **Instrument** - Defines the common interface for all instruments
+✅ **Drums, Guitar, Piano** - Each implements the instrument interface differently
+✅ **InstrumentPlayer** - Works with any instrument without modification
+✅ **Extensible** - Add new instruments (Violin, Flute, etc.) without changing InstrumentPlayer
+
+Each class follows **OCP**: you can extend with new instruments without modifying existing code ✨
