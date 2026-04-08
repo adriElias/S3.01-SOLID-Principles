@@ -69,7 +69,7 @@ public class CalculadoraDescomptes {
     }
 }
 ````
-- **4️⃣ Exemple d'ús:**
+- **4️⃣ Exemple dús:**
 
 ```java
 public class Main {
