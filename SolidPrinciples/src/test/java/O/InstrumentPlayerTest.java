@@ -1,4 +1,3 @@
-// test/O/InstrumentPlayerTest.java
 package O;
 
 import org.junit.Test;
