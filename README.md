@@ -1,44 +1,43 @@
-# 🏋️‍♀️ Exercicis SOLID
+# 🏋️‍♀️ SOLID Exercises
 
-> En aquest repositori trobaràs cada lletra dels principis SOLID representada amb codi Java que hauràs de refactoritzar per tal que compleixi correctament el principi corresponent.
+> In this repository you will find each letter of the SOLID principles represented with Java code that you will need to refactor so that it correctly complies with the corresponding principle.
 
-### Per a acomplir aquesta tasca, hauràs de:
+### To accomplish this task, you will need to:
 
-- Crear un nou repositori a partir d'aquest **template repository**.
-- Navegar per les carpetes corresponents a cada principi.
-- Analitzar el codi problemàtic proporcionat.
-- Refactoritzar-lo per ajustar-lo al principi SOLID.
-- Cal escriure una explicació de les teves decisions.
+- Create a new repository from this **template repository**.
+- Navigate through the folders corresponding to each principle.
+- Analyze the problematic code provided.
+- Refactor it to adjust to the SOLID principle.
+- You must write an explanation of your decisions.
 
-## 📥 Com començar amb el template repository
+## 📥 How to get started with the template repository
 
-> En comptes de clonar directament aquest repositori, hauràs de crear el teu propi repositori a partir d'aquest **template repository** per poder treballar còmodament i tenir el teu historial de canvis.
+> Instead of cloning this repository directly, you will need to create your own repository from this **template repository** so you can work comfortably and have your change history.
 
-1. Fes clic a **Use this template**.
-2. Crea un nou repositori amb el teu nom i la teva configuració.
-3. Després, clona el nou repositori creat al teu equip local amb:
+1. Click on **Use this template**.
+2. Create a new repository with your name and your configuration.
+3. Then, clone the new repository created to your local machine with:
 
  ```bash
-   git clone https://github.com/usuari/nom-del-teu-repositori.git
-   cd nom-del-teu-repositori
+   git clone https://github.com/user/name-of-your-repository.git
+   cd name-of-your-repository
 ```
 
-## 🛠️ Com fer la tasca
+## 🛠️ How to do the task
 
-- 📖 Llegeix el fitxer README.md dins la carpeta del principi que vols estudiar.
-- 👀 Analitza la classe Java problemàtica proporcionada.
-- 🧠 Identifica com i per què aquesta classe incompleix el principi SOLID.
-- ✏️ Refactoritza la classe per tal que respecti correctament el principi.
-- 💬 Reflexiona sobre els canvis:
-1. Què estava malament?
-2. Per què incomplia el principi?
-3. Quina solució has aplicat i per què?
-- 📝 Escriu una breu explicació dins un fitxer EXPLICACIO.md a la mateixa carpeta de l’exercici.
+- 📖 Read the README.md file inside the folder of the principle you want to study.
+- 👀 Analyze the problematic Java class provided.
+- 🧠 Identify how and why this class fails to comply with the SOLID principle.
+- ✏️ Refactor the class so that it correctly respects the principle.
+- 💬 Reflect on the changes:
+1. What was wrong?
+2. Why did it not comply with the principle?
+3. What solution did you apply and why?
+- 📝 Write a brief explanation inside an EXPLANATION.md file in the same folder of the exercise.
 
-## 📤 Entrega
-> L'entrega es farà a través de Moodle.
+## 📤 Delivery
+> Delivery will be done through Moodle.
 
-### Has d’enviar:
-- L'URL del teu repositori GitHub amb les tasques fetes.
-- i el nom de l’alumne que ha corregit el teu exercici.
-
+### You must send:
+- The URL of your GitHub repository with the tasks completed.
+- And the name of the student who corrected your exercise.
